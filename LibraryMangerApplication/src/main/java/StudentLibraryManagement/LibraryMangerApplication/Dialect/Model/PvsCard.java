@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class PvsCard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
