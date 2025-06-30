@@ -12,8 +12,10 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class EarningCoin {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int coinId;
     long available;
     long deducted;

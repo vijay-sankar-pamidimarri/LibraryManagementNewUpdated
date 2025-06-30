@@ -14,9 +14,10 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class User {
     @Id
-   @GeneratedValue(strategy = GenerationType.AUTO   )
+   @GeneratedValue(strategy = GenerationType.AUTO)
    int userId;
     @Column(nullable = false)
     String userName;

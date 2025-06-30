@@ -1,20 +1,31 @@
 package StudentLibraryManagement.LibraryMangerApplication.Services;
 
+import StudentLibraryManagement.LibraryMangerApplication.Dialect.Model.EarningCoin;
 import StudentLibraryManagement.LibraryMangerApplication.Dialect.Model.User;
 import StudentLibraryManagement.LibraryMangerApplication.Repository.EarningCoinRepo;
+import StudentLibraryManagement.LibraryMangerApplication.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class EarningCoinService {
     @Autowired
     EarningCoinRepo earningCoinRepo;
+
+    @Autowired
+    UserRepo userRepo;
+
+    @Autowired
+    PvsCardService pvsCardService;
     public void createCoinAccount(User user){
          return;
     }
 
 
 //    getting the no of coins
+
     public int getCoinsForThisUser(int card_id){
         return earningCoinRepo.getCoinsForThisUser(card_id);
     }
