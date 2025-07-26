@@ -15,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int bookId;
     String bookName;
     int noOfPages;

@@ -1,16 +1,20 @@
 package StudentLibraryManagement.LibraryMangerApplication.Controller;
 
+import StudentLibraryManagement.LibraryMangerApplication.Converter.Updater;
 import StudentLibraryManagement.LibraryMangerApplication.DTO.bookDTO;
 import StudentLibraryManagement.LibraryMangerApplication.Dialect.Model.Book;
 import StudentLibraryManagement.LibraryMangerApplication.Services.BookSevice;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/Library-Manger-Book")
+@Slf4j
 public class BookController {
 
     //this most efficient way to create the object only once
@@ -27,9 +31,10 @@ public class BookController {
          Create Operations we would had only one API to Do this
      */
     @PostMapping("/CreateBook")
-    public ResponseEntity<String> createBook(bookDTO bookDTO){
+    public ResponseEntity<Book> createBook(@RequestBody  bookDTO bookDTO){
+        log.info("This is From rthr Controller class  :" +bookDTO.getBookName()+"   "+bookDTO.getActiveLink());
         Book book= bookSevice.createBook(bookDTO);
-        return new ResponseEntity<>("Successful", HttpStatus.OK);
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     /*
@@ -46,5 +51,25 @@ public class BookController {
     public ResponseEntity<List<Book>> getAll(){
         return new ResponseEntity<>(bookSevice.getAll(),HttpStatus.OK);
     }
+    @PostMapping("/deleteById")
+    public ResponseEntity<Book> deleteById(@RequestBody Map<String,Integer> map){
+        return bookSevice.deleteBookById(map.get("id"));
+    }
+
+    @PutMapping("/updateById")
+    public ResponseEntity<Book> updateById(@RequestBody Updater update){
+        log.info("This is from Update class " +update.getBookDTo());
+
+        return bookSevice.updateById(update.getBookDTo(), update.getId());
+    }
+        @GetMapping("/run")
+        public String test(){
+        return "App is Running";
+        }
+
+        @GetMapping("/frontend")
+        public String frontend(){
+           return "This IS From Spring Boot";
+        }
 
 }

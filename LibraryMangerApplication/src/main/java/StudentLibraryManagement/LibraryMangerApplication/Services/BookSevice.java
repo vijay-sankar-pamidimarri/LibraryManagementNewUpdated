@@ -6,13 +6,15 @@ import StudentLibraryManagement.LibraryMangerApplication.Dialect.Model.PvsCard;
 import StudentLibraryManagement.LibraryMangerApplication.Exceptions.bookExceptions;
 import StudentLibraryManagement.LibraryMangerApplication.Repository.BookRepo;
 import StudentLibraryManagement.LibraryMangerApplication.Repository.PvsCardRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class BookSevice {
     @Autowired
@@ -35,7 +37,10 @@ public class BookSevice {
      */
     public Book createBook(bookDTO bookDTO) {
         Book book= StudentLibraryManagement.LibraryMangerApplication.Converter.bookConverter.book(bookDTO);
-        return bookRepo.save(book);
+        log.info("This is From rthr Controller class  :" +book.getActiveLink());
+        Book b =bookRepo.save(book);
+        System.out.println(b.getActiveLink()+"  ");
+        return b;
     }
 
 
@@ -95,5 +100,17 @@ public class BookSevice {
     }
 
 
+    public ResponseEntity<Book> deleteBookById(int id) {
+       Book book=getBookById(id);
+       bookRepo.deleteById(id);
+       return new ResponseEntity<>(book,HttpStatusCode.valueOf(200));
+    }
 
+    public ResponseEntity<Book> updateById(bookDTO bookDTO,int id) {
+        log.info("This is from Update class "+bookDTO.getBookName() +"   "+bookDTO.getActiveLink());
+
+        Book book=getBookById(id);
+        bookRepo.updateById(bookDTO.getBookName(),bookDTO.getAuthorName(),bookDTO.getTitle(),bookDTO.getCatgeory(),bookDTO.getActiveLink(),id);
+        return new ResponseEntity<>(getBookById(id),HttpStatusCode.valueOf(200));
+    }
 }
